@@ -1,49 +1,29 @@
-from __future__ import annotations
+from flat import Bill, Flatmate
+from reports import FileSharer, PdfReport
 
-from typing import Union
+amount = float(input("Hey user, enter the bill amount: "))
+period = input("What is the bill period? E.g. December 2020: ")
 
+name1 = input("What is your name? ")
+days_in_house1 = int(
+    input(f"How many days did {name1} stay in the house during the bill period? ")
+)
 
-class Bill:
-    """
-    Object that contains data about a bill, such as total amount and period of the bill.
-    """
-
-    def __init__(self, amount: Union[float, int], period) -> None:
-        self.amount = amount
-        self.period = period
-
-
-class Flatmate:
-    """
-    Creates a flatemate person who lives in the flat and pays a share of a bill.
-    """
-
-    def __init__(self, name: str, days_in_house: int) -> None:
-        self.name = name
-        self.days_in_house = days_in_house
-
-    def pays(self, bill: Bill, other: Flatmate) -> float:
-        weight = self.days_in_house / (self.days_in_house + other.days_in_house)
-        to_pay = bill.amount * weight
-        return to_pay
+name2 = input("What is the name of the other flatmate? ")
+days_in_house2 = int(
+    input(f"How many days did {name2} stay in the house during the bill period? ")
+)
 
 
-class PdfReport:
-    """
-    Creates a Pdf file that contains data about the flatmates such as their names,
-    their due amount and the period of the bill.
-    """
+the_bill = Bill(amount, period)
+flatmate1 = Flatmate(name1, days_in_house1)
+flatmate2 = Flatmate(name2, days_in_house2)
 
-    def __init__(self, filename: str) -> None:
-        self.filename = filename
+print(f"{flatmate1.name} pays: ", flatmate1.pays(the_bill, flatmate2))
+print(f"{flatmate2.name} pays: ", flatmate2.pays(the_bill, flatmate1))
 
-    def generate(self, flatemate1: Flatmate, flatemate2: Flatmate, bill: Bill) -> None:
-        pass
+pdf_report = PdfReport(filename=f"{the_bill.period}.pdf")
+pdf_report.generate(flatmate1, flatmate2, the_bill)
 
-
-the_bill = Bill(amount=120, period="March 2021")
-john = Flatmate(name="John", days_in_house=20)
-marry = Flatmate(name="Marry", days_in_house=25)
-
-print("John pays: ", john.pays(bill=the_bill, other=marry))
-print("Marry pays: ", marry.pays(bill=the_bill, other=john))
+file_sharer = FileSharer(filepath=pdf_report.filename)
+# print(file_sharer.share())

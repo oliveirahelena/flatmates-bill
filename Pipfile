@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 pydantic = "*"
 fpdf = "*"
+filestack-python = "*"
 
 [dev-packages]
 pytest-cov = "*"
