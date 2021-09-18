@@ -1,6 +1,6 @@
-# Projeto Base Python
+# Flatmates's Bill
 
-Projeto base para iniciar qualquer projeto Python.
+App em Python para rateio de contas entre colegas de quarto.
 
 ## Instalar dependências
 
